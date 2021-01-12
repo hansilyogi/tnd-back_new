@@ -308,7 +308,6 @@ router.post("/updateConnectionReq", async function(req,res,next){
         requestSender , 
         requestReceiver , 
         requestStatus,
-        notificationData,
     } = req.body; 
     try {
         let existRecord = await connectionSchema.find({
@@ -316,7 +315,16 @@ router.post("/updateConnectionReq", async function(req,res,next){
             {requestSender : requestSender} , 
             {requestReceiver : requestReceiver} ,
           ]
+        })
+        .populate({
+          path : "requestSender",
+          select : "name mobile email"
+        })
+        .populate({
+          path : "requestReceiver",
+          select : "name mobile email"
         });
+        // console.log("response ---------------- "+existRecord);
         if(existRecord.length == 1){
           let updateIs = {
             requestStatus: requestStatus
@@ -324,15 +332,19 @@ router.post("/updateConnectionReq", async function(req,res,next){
           let updateConnection = await connectionSchema.findByIdAndUpdate(existRecord[0]._id,updateIs);
           let receiverData = await directoryData.find({ _id: requestReceiver })
                                                   .select("fcmToken name mobile email");
+                                                
+          let senderData = await directoryData.find({ _id: requestSender })
+          .select("fcmToken name mobile email");
   
             console.log(receiverData[0].fcmToken);
-            let notificationTitleIs = notificationData.notificationTitle;
-            let notificationBodyIs = notificationData.notificationBody;
+            let notificationTitleIs = "Request Updated";
+            let notificationBodyIs = existRecord[0].requestReceiver.name + " has " + requestStatus +  " your Request";
             console.log(notificationTitleIs);
             console.log(notificationBodyIs);
             let receiverFcmToken = receiverData[0].fcmToken;
+            let senderFcmToken = senderData[0].fcmToken;
             var sendReqNotiToReceiver = {
-              "to":receiverFcmToken,
+              "to":senderFcmToken,
               "priority":"high",
               "content_available":true,
               "data": {
@@ -405,23 +417,22 @@ router.post("/getsingleusernotification", async function(req,res,next){
 
 router.post("/requestcomplete", async function(req,res,next){
   // const id = req.body.connectionid;
-  const {topic,date,userid, id, generatedRefral} = req.body;
+  const {topic,date,requestSender , requestReceiver , generatedRefral} = req.body;
   try{
-    var dataexist = await connectionSchema.find({ $and: [{_id : id} , {requestStatus : "accepted"}] });
+    var dataexist = await connectionSchema.find({ $and: [{requestSender : requestSender}, {requestReceiver : requestReceiver} , {requestStatus : "accepted"}] });
     if(dataexist.length == 0){
-      res.status(200).json({IsSuccess : true, Data : [], Message : "No Data Found"});
+      res.status(200).json({IsSuccess : true, Data : 0, Message : "Status is Still Pending to Accpet"});
     }
     else{
       var isstatus = {
         topic : topic,
         generatedRefral : generatedRefral,
         date : date,
-        userid : userid,
         requestStatus : "completed"
       };
 
-      var updateid = await connectionSchema.findByIdAndUpdate(id, isstatus);
-      console.log(updateid);
+      var updateid = await connectionSchema.findByIdAndUpdate(dataexist[0]._id, isstatus);
+      // console.log(updateid);
       res.status(200).json({ IsSuccess : true, Data : 1, Message : "Data updated"});
     }
   }
