@@ -290,7 +290,7 @@ router.post("/updateConnectionReq", async function(req,res,next){
     const {
         requestSender , 
         requestReceiver , 
-        requestStatus, 
+        requestStatus,
         notificationData,
     } = req.body; 
     try {
@@ -372,12 +372,12 @@ router.post("/updateConnectionReq", async function(req,res,next){
 router.post("/getsingleusernotification", async function(req,res,next){
   const id = req.body.id;
   try{
-    var data = await connectionSchema.find({ requestSender : id});
+    var data = await connectionSchema.find({ requestReceiver : id});
     if(data.length == 0){
-      res.status(200).json({ IsSuccess : true, Data : 0, Message : "No user Found"});
+      res.status(200).json({ IsSuccess : true, Data : [], Message : "No user Found"});
     }
     else{
-      res.status(200).json({ IsSuccess : true, Data : data, Message : "User Found"});
+      res.status(200).json({ IsSuccess : true,Count: data.length, Data : data, Message : "User Found"});
     }
   }
   catch(err){
