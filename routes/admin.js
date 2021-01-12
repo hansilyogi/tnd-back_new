@@ -4,10 +4,11 @@ var router = express.Router();
 var multer = require('multer');
 var fs = require('fs');
 const path = require('path');
-var request = require('request');
+var request = require('request-promise');
 // var moment = require('moment');
 const moment = require('moment-timezone');
 const mongoose = require("mongoose");
+// var request = require('request');
 
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
@@ -1824,6 +1825,55 @@ router.post("/notifyall", async function(req,res,next){
       // else{
         // res.status(200).json({IsSuccess : true, Data : 0, Message : "Data Not found"});
       // }
+    }
+    catch(err){
+      res.status(500).json({ IsSuccess: false , Message: err.message });
+    }
+});
+
+router.post("/getsingleuserbookmark", async function(req,res,next){
+    const userid = req.body.id;
+    try{
+        var findone = await bookMarkSchema.find({userId : userid});
+        if(findone.length == 0){
+            res.status(200).json({IsSuccess : true, Data : 0, Message : "No Data Found"});
+        }
+        else{
+            news_id = "";
+            var news_wp;
+            for(i=0;i<findone.length;i++){
+                news_id += findone[i].newsId+ ",";
+
+            }
+            var da = news_id.slice(0,-1);
+            var news_wp =  await request.post('http://www.thenationaldawn.in/wp-json/custom/bookmark',{form:{bookmark_news_id : "5621,5607"}}, function (error, response, body){
+                // console.log(response.body);
+                // news_wp = response.body;
+            });
+            console.log(news_wp);
+            res.status(200).json({IsSuccess : true, Data : news_wp, Message : "Data Found"});
+        }
+    }
+    catch(err){
+      res.status(500).json({ IsSuccess: false , Message: err.message });
+    }
+});
+
+router.post("/newsbookmarkid", async function(req,res,next){
+    const userid = req.body.id;
+    try{
+        var findone = await bookMarkSchema.find({userId : userid});
+        if(findone.length == 0){
+            res.status(200).json({IsSuccess : true, Data : 0, Message : "No Data Found"});
+        }
+        else{
+            news_id = "";
+            for(i=0;i<findone.length;i++){
+                news_id += findone[i].newsId+ ",";
+            }
+            var da = news_id.slice(0,-1);
+            res.status(200).json({IsSuccess : true, Data : da, Message : "Data Found"});
+        }
     }
     catch(err){
       res.status(500).json({ IsSuccess: false , Message: err.message });

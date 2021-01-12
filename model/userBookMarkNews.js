@@ -5,8 +5,8 @@ var userBookMark = mongoose.Schema({
         type: mongoose.Types.ObjectId, ref: "UsersList", default: null 
     },       
     newsId : {
-            // type: String
-        type: mongoose.Types.ObjectId, ref: "NewsList", default: null
+            type: String
+        // type: mongoose.Types.ObjectId, ref: "NewsList", default: null
     },
     date : {
         type : String

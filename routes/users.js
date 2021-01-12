@@ -379,7 +379,7 @@ router.post("/updateConnectionReq", async function(req,res,next){
             });
           res.status(200).json({ IsSuccess: true , Data: 1 , Message: "Connection Updated" });
         }else{
-          res.status(200).json({ IsSuccess: true , Data: [] , Message: "No Connection Data Exist" });
+          res.status(200).json({ IsSuccess: true , Data: 0 , Message: "No Connection Data Exist" });
         }
     } catch (error) {
         res.status(500).json({ IsSuccess: false , Message: error.message });
@@ -394,6 +394,7 @@ router.post("/getsingleusernotification", async function(req,res,next){
       res.status(200).json({ IsSuccess : true, Data : [], Message : "No user Found"});
     }
     else{
+      // console.log(news_id);
       res.status(200).json({ IsSuccess : true,Count: data.length, Data : data, Message : "User Found"});
     }
   }
