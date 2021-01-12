@@ -30,7 +30,16 @@ var connectionSchema = mongoose.Schema({
     },
     date : {
         type : String,
-        default : new Date(),
+    },
+    time : {
+        type: String,
+    },
+    topic : {
+        type : String,
+        default : "",
+    },
+    generatedRefral :{
+        type : String,
     }
 });
 

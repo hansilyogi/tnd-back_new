@@ -4,6 +4,7 @@ var networkSchema = require('../model/connectionRequest');
 var request = require('request');
 var directoryData = require('../model/test.model');
 var connectionSchema = require('../model/connectionModel');
+const moment = require('moment-timezone');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -195,13 +196,26 @@ router.post("/oneTwoOneConnectionReq", async function(req,res,next){
         requestStatus, 
         notificationData, 
         meetingType , 
-        meetingLink 
+        meetingLink ,
     } = req.body;
     try {
-        let existRecord = await connectionSchema.find({
+      let objDate = new Date();
+      let stringDate = objDate.toString();
+      let dateList = stringDate.split(" ");
+      let newdate = dateList[2] + " " + dateList[1] + " " + dateList[3];
+      console.log(newdate);
+      var conn_date = moment()
+                      .tz("Asia/Calcutta")
+                      .format("DD MM YYYY, h:mm:ss a")
+                      .split(",")[0];
+      var conn_time = moment()
+                      .tz("Asia/Calcutta")
+                      .format("DD MM YYYY, h:mm:ss a")
+                      .split(",")[1];
+      let existRecord = await connectionSchema.find({
           $and: [
-            {requestSender : requestSender} , 
-            {requestReceiver : requestReceiver} ,
+            {requestSender : requestSender}, 
+            {requestReceiver : requestReceiver},
           ]
         })
         if(existRecord.length == 1){
@@ -214,14 +228,14 @@ router.post("/oneTwoOneConnectionReq", async function(req,res,next){
             notification : notificationData, 
             meetingType : meetingType, 
             meetingLink : meetingLink,
+            date: conn_date,
+            time: conn_time,
           })
       
           if(sendRequest != null){
             sendRequest.save();
             let receiverData = await directoryData.find({ _id: requestReceiver })
                                                   .select("fcmToken name mobile email");
-            let tdate = new Date();
-            console.log(tdate);
             
             console.log(receiverData[0].fcmToken);
             let notificationTitleIs = notificationData.notificationTitle;
@@ -235,11 +249,14 @@ router.post("/oneTwoOneConnectionReq", async function(req,res,next){
               "content_available":true,
               "data": {
                   "sound": "surprise.mp3",
-                  "click_action": "FLUTTER_NOTIFICATION_CLICK"
+                  "click_action": "FLUTTER_NOTIFICATION_CLICK",
+                  "senerID" : requestSender,
+                  "ReceiverId" : requestReceiver,
               },
               "notification":{
                           "body": notificationBodyIs,
                           "title":notificationTitleIs,
+                          "date" : newdate,
                           "badge":1
                       }
             };
@@ -275,9 +292,9 @@ router.post("/oneTwoOneConnectionReq", async function(req,res,next){
                   // }
               }
             });
-            res.status(200).json({ IsSuccess: true , Data: sendRequest , Message: "Connection Requested" });
+            res.status(200).json({ IsSuccess: true , Data: 1 , Message: "Connection Requested" });
           }else{
-            res.status(200).json({ IsSuccess: true , Data: [] , Message: "Connection Not Send" });
+            res.status(200).json({ IsSuccess: true , Data: 0 , Message: "Connection Not Send" });
           }
         }
         
@@ -378,6 +395,33 @@ router.post("/getsingleusernotification", async function(req,res,next){
     }
     else{
       res.status(200).json({ IsSuccess : true,Count: data.length, Data : data, Message : "User Found"});
+    }
+  }
+  catch(err){
+    res.status(500).json({ IsSuccess: false , Message: err.message });
+  }
+});
+
+router.post("/requestcomplete", async function(req,res,next){
+  // const id = req.body.connectionid;
+  const {topic,date,userid, id, generatedRefral} = req.body;
+  try{
+    var dataexist = await connectionSchema.find({ $and: [{_id : id} , {requestStatus : "accepted"}] });
+    if(dataexist.length == 0){
+      res.status(200).json({IsSuccess : true, Data : [], Message : "No Data Found"});
+    }
+    else{
+      var isstatus = {
+        topic : topic,
+        generatedRefral : generatedRefral,
+        date : date,
+        userid : userid,
+        requestStatus : "completed"
+      };
+
+      var updateid = await connectionSchema.findByIdAndUpdate(id, isstatus);
+      console.log(updateid);
+      res.status(200).json({ IsSuccess : true, Data : 1, Message : "Data updated"});
     }
   }
   catch(err){
