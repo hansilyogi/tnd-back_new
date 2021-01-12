@@ -275,7 +275,7 @@ router.post("/oneTwoOneConnectionReq", async function(req,res,next){
                   // }
               }
             });
-            res.status(200).json({ IsSuccess: true , Data: [sendRequest] , Message: "Connection Requested" });
+            res.status(200).json({ IsSuccess: true , Data: sendRequest , Message: "Connection Requested" });
           }else{
             res.status(200).json({ IsSuccess: true , Data: [] , Message: "Connection Not Send" });
           }
