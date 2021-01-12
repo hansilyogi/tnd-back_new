@@ -252,6 +252,7 @@ router.post("/oneTwoOneConnectionReq", async function(req,res,next){
                   "click_action": "FLUTTER_NOTIFICATION_CLICK",
                   "senerID" : requestSender,
                   "ReceiverId" : requestReceiver,
+                  "status" : requestStatus,
               },
               "notification":{
                           "body": notificationBodyIs,
@@ -349,7 +350,10 @@ router.post("/updateConnectionReq", async function(req,res,next){
               "content_available":true,
               "data": {
                   "sound": "surprise.mp3",
-                  "click_action": "FLUTTER_NOTIFICATION_CLICK"
+                  "click_action": "FLUTTER_NOTIFICATION_CLICK",
+                  "senerID" : requestSender,
+                  "ReceiverId" : requestReceiver,
+                  "status" : requestStatus,
               },
               "notification":{
                           "body": notificationBodyIs,
