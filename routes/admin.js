@@ -1850,8 +1850,9 @@ router.post("/getsingleuserbookmark", async function(req,res,next){
                 // console.log(response.body);
                 // news_wp = response.body;
             });
-            // console.log(news_wp);
-            res.status(200).json({IsSuccess : true, Data : news_wp, Message : "Data Found"});
+            var news_data = JSON.parse(news_wp);
+            var final_data = news_data["Data"];
+            res.status(200).json({ IsSuccess : true, Data : final_data, Message : "Data Found" });
         }
     }
     catch(err){
