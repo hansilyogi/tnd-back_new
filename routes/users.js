@@ -5,6 +5,7 @@ var request = require('request');
 var directoryData = require('../model/test.model');
 var connectionSchema = require('../model/connectionModel');
 const moment = require('moment-timezone');
+var referalcodeSchema = require('../model/referalcodeModel');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -438,6 +439,26 @@ router.post("/requestcomplete", async function(req,res,next){
       var updateid = await connectionSchema.findByIdAndUpdate(dataexist[0]._id, isstatus);
       // console.log(updateid);
       res.status(200).json({ IsSuccess : true, Data : 1, Message : "Data updated"});
+    }
+  }
+  catch(err){
+    res.status(500).json({ IsSuccess: false , Message: err.message });
+  }
+});
+
+router.post("/getreferalcode", async function(req,res,next){
+  const userid = req.body.userid;
+  try{
+    var data = await referalcodeSchema.find({Userid : userid});
+    if(data.length != 0){
+      res.status(200).json({IsSuccess : true, Data : 0, Message : "User already has referal code"});
+    }
+    else{
+      var newdata = await new referalcodeSchema({
+        Userid : userid,
+      });
+      newdata.save();
+      res.status(200).json({IsSuccess : true, Data : 1, Message : "User got Referal Code"});
     }
   }
   catch(err){

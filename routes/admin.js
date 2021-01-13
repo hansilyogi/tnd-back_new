@@ -1851,7 +1851,7 @@ router.post("/getsingleuserbookmark", async function(req,res,next){
                 // news_wp = response.body;
             });
             // console.log(news_wp);
-            res.status(200).json({IsSuccess : true, Data : [news_wp], Message : "Data Found"});
+            res.status(200).json({IsSuccess : true, Data : news_wp, Message : "Data Found"});
         }
     }
     catch(err){

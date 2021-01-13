@@ -42,6 +42,27 @@ router.post('/directorylistingV2', async function(req , res , next){
     }
 });
 
+router.post("/getuserbycategoryid", async function(req,res,next){
+    const cid = req.body.id;
+    try{
+        let directoryListv2 = await directoryData.find({business_category : cid})
+                                               .populate({
+                                                   path: "business_category",
+                                               })
+                                               .populate({
+                                                   path: "memberOf"
+                                               });
+        if(directoryListv2 != null){
+            res.status(200).json({ Message: "Data Found...!!!", Count : directoryListv2.length , Data: directoryListv2, IsSuccess: true });
+        }else{
+            res.status(200).json({ Message: "Data Not Found...!!!", IsSuccess: false });
+        }
+    }
+    catch(err){
+        res.status(500).json({ Message: error.message, IsSuccess: false });
+    }
+});
+
 router.post('/profile', async function(req , res , next){
     const { id } = req.body;
     try {
