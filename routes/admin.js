@@ -1832,11 +1832,11 @@ router.post("/notifyall", async function(req,res,next){
 });
 
 router.post("/getsingleuserbookmark", async function(req,res,next){
-    const userid = req.body.id;
+    const userid = req.body.userid;
     try{
         var findone = await bookMarkSchema.find({userId : userid});
         if(findone.length == 0){
-            res.status(200).json({IsSuccess : true, Data : 0, Message : "No Data Found"});
+            res.status(200).json({IsSuccess : true, Data : [], Message : "No Data Found"});
         }
         else{
             news_id = "";
@@ -1850,8 +1850,8 @@ router.post("/getsingleuserbookmark", async function(req,res,next){
                 // console.log(response.body);
                 // news_wp = response.body;
             });
-            console.log(news_wp);
-            res.status(200).json({IsSuccess : true, Data : news_wp, Message : "Data Found"});
+            // console.log(news_wp);
+            res.status(200).json({IsSuccess : true, Data : [news_wp], Message : "Data Found"});
         }
     }
     catch(err){
