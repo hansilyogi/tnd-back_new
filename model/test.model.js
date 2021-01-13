@@ -19,11 +19,14 @@ var newSchema = mongoose.Schema({
         type: String,
         default: "",
     },
+    refralcode : {
+        type : String
+    },
     company_website : {
         type : String,
         default : "",
     },
-    referred_by: { 
+    referred_by: {
         type: String,
         default: "", 
     },

@@ -1297,7 +1297,7 @@ router.post("/addToBookMark", async function(req,res,next){
         });
         if(record){
             record.save();
-            res.status(200).json({ IsSuccess: true , Data: [record] , Message: "Added To BookMark" });
+            res.status(200).json({ IsSuccess: true , Data: 1 , Message: "Added To BookMark" });
         }else{
             res.status(200).json({ IsSuccess: true , Data: 0 , Message: "Something Wrong" });
         }
