@@ -418,7 +418,7 @@ router.post('/getallbusiness_stories', async function(req,res,next){
 });
 
 router.post('/getstorybyid', async function(req,res,next){
-    const id = req.body.id;
+    const id = req.body.categoryid;
     try{
         var isdata = await bussModelSchema.find({ categoryType : id});
         if(isdata.length == 0 ){
