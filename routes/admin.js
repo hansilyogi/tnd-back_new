@@ -1637,7 +1637,13 @@ router.post('/getsingleid', async function(req,res,next) {
     const id = req.body.id;
     console.log(id);
     try{
-    var name_id = await directoryData.find({_id : id});
+    var name_id = await directoryData.find({_id : id})
+                                        .populate({
+                                            path : 'memberOf',
+                                        })
+                                        .populate({
+                                            path : 'business_category',
+                                        });
     if(name_id){
     res.status(200).json({ Message : "Member Found", Data : name_id, IsSuccess : true});
     }
