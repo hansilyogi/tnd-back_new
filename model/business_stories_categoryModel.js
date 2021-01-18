@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 
-var newsCategorySchema = mongoose.Schema({
-    newsType: {
+var business_storiesCategorySchema = mongoose.Schema({
+    categoryType: {
         type:String,
         require: true
     },
-    newsDate: {
+    initdate: {
         type:Date,
         default: Date.now
     },
@@ -14,4 +14,4 @@ var newsCategorySchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model("NewsCategory",newsCategorySchema);
+module.exports = mongoose.model("Business_storiesCategory",business_storiesCategorySchema);

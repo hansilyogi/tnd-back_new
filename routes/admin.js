@@ -30,6 +30,8 @@ var bookMarkSchema = require("../model/userBookMarkNews");
 var memberModelSchema = require("../model/memberModel");
 var eventregSchema = require("../model/eventregisterModel");
 var inquirySchema = require("../model/inquiryModel");
+var business_storiesCategorySchema = require('../model/business_stories_categoryModel');
+var bussModelSchema = require('../model/bus_storyModel');
 const { off, resource, all } = require('../app.js');
 const { time } = require('console');
 
@@ -252,6 +254,155 @@ function getCurrentTime(){
     return time;
 }
 
+router.post("/addBus_storyCategory" , uploadCategoryImg.single("categoryImage") , async function(req,res,next){
+    const { categoryType , initdate , categoryImage } = req.body;
+    const file = req.file;
+    if(req.file){
+        const cloudinary = require('cloudinary').v2;
+        cloudinary.config({
+          cloud_name: 'dckj2yfap',
+          api_key: '693332219167892',
+          api_secret: 'acUf4mqnUBJCwsovIz-Ws894NGY'
+        });
+        var path = req.file.path;
+        var uniqueFilename = new Date().toISOString();
+        
+        cloudinary.uploader.upload(
+          path,
+          { public_id: `blog/bus_story_category/${uniqueFilename}`, tags: `blog` }, // directory and tags are optional
+          function(err, image) {
+            if (err) return res.send(err)
+            
+            // remove file from server
+            const fs = require('fs');
+            fs.unlinkSync(path);
+            
+          }
+        )
+      }
+    try {
+        var record = await new business_storiesCategorySchema({
+            categoryType: categoryType,
+            initdate: initdate,
+            // categoryImage: file == undefined ? null : file.path,
+            categoryImage: file == undefined ? null : 'https://res.cloudinary.com/dckj2yfap/image/upload/v1601267438/blog/bus_story_category/'+uniqueFilename,
+        });
+        if(record){
+            res.status(200).json({ IsSuccess: true , Data: [record] , Message: "Business Stories Category Added" });
+            await record.save();
+        }else{
+            res.status(200).json({ IsSuccess: true , Data: [] , Message: "Category Not Added"});
+        }
+    } catch (error) {
+        res.status(500).json({ Message: error.message , IsSuccess: false });
+    }
+});
+
+router.post("/getbussCategory" , async function(req,res,next){
+    try {
+        var record = await business_storiesCategorySchema.find();
+        if(record){
+            res.status(200).json({ IsSuccess: true , Data: record , Message: "Business Stories Category Found" });
+        }else{
+            res.status(200).json({ IsSuccess: true , Data: 0 , Message: "No Category Available" });
+        }
+    } catch (error) {
+        res.status(500).json({ IsSuccess: false , Message: error.message });
+    }
+});
+
+router.post('/addbusiness_story', uploadNewsImg.fields([{name:'bussImage'},{name :'bussvideo'},{name:'bussAudio'}]), async function(req,res,next){
+    const { categoryType , content , BusDate, BusTime , headline , bussImage ,bussvideo} = req.body;
+    // const file = req.file;
+    //console.log(imageData);
+
+    var d = [];
+    var e = [];
+    var f = [];
+
+    var fileinfo = req.files.bussImage;
+    var filevideo = req.files.bussvideo;
+    var fileaudio = req.files.bussAudio;
+
+    if(req.files.bussImage || req.files.bussvideo || req.files.bussAudio){
+        const cloudinary = require('cloudinary').v2;
+        cloudinary.config({
+            cloud_name: 'dckj2yfap',
+            api_key: '693332219167892',
+            api_secret: 'acUf4mqnUBJCwsovIz-Ws894NGY'
+        });
+
+        if(req.files.bussImage){
+            for(var j =0; j < fileinfo.length; j++){
+                var uniqname = "";
+                uniqname = moment().format('MMMM Do YYYY, h:mm:ss a');
+                var c = await cloudinary.uploader.upload(fileinfo[j].path,{ public_id: `blog/bus_story_pic/${uniqname}`, tags: `blog` },function(err,result) {
+                    // console.log("Error : ", err);
+                    // console.log("Resilt : ", result);
+                    d[j] =result.url;
+                });
+            }
+        }
+        if(req.files.bussvideo){
+            var uniqvideo = "";
+            uniqvideo = moment().format('MMMM Do YYYY, h:mm:ss a');
+            var v = await cloudinary.uploader.upload(filevideo[0].path, {resource_type:"video", public_id: `blog/bus_story_pic/${uniqvideo}`, tags: `blog` },function(err,result) {
+            console.log("Error : ", err);
+            console.log("Resilt : ", result);
+            e[0] = result.url;
+            });
+        }
+        if(req.files.bussAudio){
+            var uniqaudio = "";
+            uniqaudio = moment().format('MMMM Do YYYY, h:mm:ss a');
+            var v = await cloudinary.uploader.upload(fileaudio[0].path,{resource_type:"video", public_id: `blog/bus_story_pic/${uniqaudio}`, tags: `blog` },function(err,result) {
+            console.log("Error : ", err);
+            console.log("Resilt : ", result);
+            f[0] = result.url;
+        });
+        }
+    }
+    
+    try {
+        var newsData;
+        if(req.files){
+            newsData = await new bussModelSchema({
+                categoryType : categoryType,
+                content : content,
+                BusDate : getCurrentDate(),
+                BusTime : getCurrentTime(),
+                headline : headline,
+                bussImage : req.files == undefined ? "" : d[0],
+                bussImage2 : req.files == undefined ? "" : d[1],
+                bussImage3 : req.files == undefined ? "" : d[2],
+                bussImage4 : req.files == undefined ? "" : d[3],
+                bussImage5 : req.files == undefined ? "" : d[4],
+                bussImage6 : req.files == undefined ? "" : d[5],
+                bussImage7 : req.files == undefined ? "" : d[6],
+                bussImage8 : req.files == undefined ? "" : d[7],
+                bussImage9 : req.files == undefined ? "" : d[8],
+                bussImage10 : req.files == undefined ? "" : d[9],
+                bussvideo : req.files == undefined ? "" : e[0],
+                bussAudio : req.files == undefined ? "" : f[0],
+            });
+        }else{
+            newsData = await new newsModelSchema({
+                newsType : newsType,
+                content : content,
+                newsDate : getCurrentDate(),
+                newsTime : getCurrentTime(),
+                headline : headline,
+            });
+        }
+        console.log(newsData);        
+        let newsDataStore = await newsData.save();
+
+        res.status(200).json({ Message: "Business Story Added Successfully...!!!", Data: [newsDataStore], IsSuccess: true });
+    } catch (error) {
+        res.status(500).json({ Message: error.message, IsSuccess: false });
+    }
+});
+
 router.post('/addnews', uploadNewsImg.fields([{name:'newsImage'},{name :'newsvideo'},{name:'newsAudio'}]), async function(req,res,next){
     const { newsType , content , newsDate, newsTime , headline , newsImage ,newsvideo, trending , bookmark} = req.body;
     // const file = req.file;
@@ -373,6 +524,8 @@ router.post('/addnews', uploadNewsImg.fields([{name:'newsImage'},{name :'newsvid
         res.status(500).json({ Message: error.message, IsSuccess: false });
     }
 });
+
+
 
 router.post('/updatenews', async function(req , res, next){
     console.log(req.body);
