@@ -8,7 +8,7 @@ var path = require('path');
 var multer = require('multer');
 const isEmpty = require('lodash.isempty');
 var moment = require('moment');
-const testModel = require('../model/test.model');
+// const testModel = require('../model/test.model');
 var axios = require("axios");
 
 var userProfile = multer.diskStorage({
@@ -32,18 +32,30 @@ router.post('/', async function(req, res, next) {
     res.status(404).send("404 ERROR");
   }
   else{
-    var record = new model({
-      name : req.body.name,
-      mobile : req.body.mobile,
-      email : req.body.email,
-      company_name : req.body.company_name,
-      referred_by : req.body.referred_by,
-      fcmToken: req.body.fcmToken,
-      isVerified: req.body.isVerified,  
-    });
-    console.log(record);
-    record.save();
-    return res.status(200).send({ IsSuccess: true, Message : "Registration Successfull" , Data: [record]});
+    const mobile = req.body.mobile;
+    try{
+        var isData = await model.find({ mobile : mobile});
+        if(isData.length == 0){
+          var record = new model({
+          name : req.body.name,
+          mobile : req.body.mobile,
+          email : req.body.email,
+          company_name : req.body.company_name,
+          referred_by : req.body.referred_by,
+          fcmToken: req.body.fcmToken,
+          isVerified: req.body.isVerified,  
+          });
+          console.log(record);
+          record.save();
+          return res.status(200).send({ IsSuccess: true, Message : "Registration Successfull" , Data: [record]});
+        }
+        else{
+          res.status(200).json({ IsSuccess : true, Data : [], Message : "Number Already Registered"});
+        }
+    }
+    catch(err){
+      res.status(500).json({ IsSuccess : false, Message : err.message });
+    }
   }
 });
 
@@ -154,7 +166,7 @@ router.post("/updatePersonal" , uploadUserProfile.single("img") , async function
 router.post("/verify", async function(req, res, next) {
   const { mobile, fcmToken } = req.body;
   try {
-      let updateCustomer = await testModel.findOneAndUpdate({ mobile: mobile }, { isVerified: true, fcmToken: fcmToken });
+      let updateCustomer = await model.findOneAndUpdate({ mobile: mobile }, { isVerified: true, fcmToken: fcmToken });
       if (updateCustomer != null) {
           res
               .status(200)

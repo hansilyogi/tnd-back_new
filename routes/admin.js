@@ -417,6 +417,22 @@ router.post('/getallbusiness_stories', async function(req,res,next){
     }
 });
 
+router.post('/getstorybyid', async function(req,res,next){
+    const id = req.body.id;
+    try{
+        var isdata = await bussModelSchema.find({ categoryType : id});
+        if(isdata.length == 0 ){
+            res.status(200).json({ IsSuccess : true, Data : [], Message : "No Data Found"});
+        }
+        else {
+            res.status(200).json({ IsSuccess : true, Data : isdata, Message : "Data Found"});
+        }
+    }
+    catch(err){
+        res.status(500).json({ IsSuccess: false, Message: err.message });
+    }
+});
+
 router.post('/addnews', uploadNewsImg.fields([{name:'newsImage'},{name :'newsvideo'},{name:'newsAudio'}]), async function(req,res,next){
     const { newsType , content , newsDate, newsTime , headline , newsImage ,newsvideo, trending , bookmark} = req.body;
     // const file = req.file;
