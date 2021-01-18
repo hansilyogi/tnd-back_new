@@ -1472,17 +1472,32 @@ router.post("/updateEvent", uploadEvent.single("eventImage") , async function(re
 router.post("/addToBookMark", async function(req,res,next){
     const { userId , newsId } = req.body;
     try {
-        var record = await new bookMarkSchema({
-            userId: userId,
-            newsId: newsId,
-            date: getCurrentDate(),
-            time: getCurrentTime(),
-        });
-        if(record){
-            record.save();
+        var record = await bookMarkSchema.find({ $and: [{newsId : newsId}, {userId:userId}] });
+        // console.log("id : "+record[0]._id);
+        if(record.length == 0){
+            var record1 = await new bookMarkSchema({
+                userId: userId,
+                newsId: newsId,
+                date: getCurrentDate(),
+                time: getCurrentTime(),
+                status : true,
+            });
+            record1.save();
             res.status(200).json({ IsSuccess: true , Data: 1 , Message: "Added To BookMark" });
-        }else{
-            res.status(200).json({ IsSuccess: true , Data: 0 , Message: "Something Wrong" });
+        }else if(record.length == 1){
+            var bid = record[0]._id;
+            var state = record[0].status;
+            if(state == true){
+                var status = false;
+            }
+            else{
+                status = true;
+            }
+            var new_record = await bookMarkSchema.findByIdAndUpdate(bid, {status : status});
+            res.status(200).json({ IsSuccess: true , Data: 2 , Message: "Bookmark Changed" });
+        }
+        else{
+            res.status(200).json({IsSuccess : true, Data : -1, Message : "Invalid Data"});
         }
     } catch (error) {
         res.status(500).json({ IsSuccess: false , Message: error.message });
@@ -2026,7 +2041,6 @@ router.post("/getsingleuserbookmark", async function(req,res,next){
             var news_wp;
             for(i=0;i<findone.length;i++){
                 news_id += findone[i].newsId+ ",";
-
             }
             var da = news_id.slice(0,-1);
             var news_wp =  await request.post('http://www.thenationaldawn.in/wp-json/custom/bookmark',{form:{bookmark_news_id : "5621,5607"}}, function (error, response, body){

@@ -13,6 +13,10 @@ var userBookMark = mongoose.Schema({
     },
     time : {
         type: String
+    },
+    status : {
+        type : Boolean,
+        default : false,
     }
 });
 
