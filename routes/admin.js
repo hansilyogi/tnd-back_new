@@ -386,7 +386,7 @@ router.post('/addbusiness_story', uploadNewsImg.fields([{name:'bussImage'},{name
                 bussAudio : req.files == undefined ? "" : f[0],
             });
         }else{
-            newsData = await new newsModelSchema({
+            newsData = await new bussModelSchema({
                 newsType : newsType,
                 content : content,
                 newsDate : getCurrentDate(),
@@ -400,6 +400,20 @@ router.post('/addbusiness_story', uploadNewsImg.fields([{name:'bussImage'},{name
         res.status(200).json({ Message: "Business Story Added Successfully...!!!", Data: [newsDataStore], IsSuccess: true });
     } catch (error) {
         res.status(500).json({ Message: error.message, IsSuccess: false });
+    }
+});
+
+router.post('/getallbusiness_stories', async function(req,res,next){
+    try{
+        var record = await bussModelSchema.find().populate("categoryType");
+        if(record){
+            res.status(200).json({ IsSuccess: true , Data: record , Message: "Stories Found" });
+        }else{
+            res.status(200).json({ IsSuccess: true , Data: [] , Message: "No Stories Available" });
+        }
+    }
+    catch(err){
+        res.status(500).json({ IsSuccess: false, Message: err.message });
     }
 });
 
