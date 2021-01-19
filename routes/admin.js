@@ -1498,7 +1498,7 @@ router.post("/addToBookMark", async function(req,res,next){
             }
             var new_record = await bookMarkSchema.findByIdAndUpdate(bid, {status : status});
             var data_new = await bookMarkSchema.find({_id : bid});
-            res.status(200).json({ IsSuccess: true , Data: [data_new] , Message: "Bookmark Changed" });
+            res.status(200).json({ IsSuccess: true , Data: data_new , Message: "Bookmark Changed" });
         }
         else{
             res.status(200).json({IsSuccess : true, Data : [], Message : "Invalid Data"});
