@@ -2042,7 +2042,7 @@ router.post("/notifyall", async function(req,res,next){
 router.post("/getsingleuserbookmark", async function(req,res,next){
     const userid = req.body.userid;
     try{
-        var findone = await bookMarkSchema.find({userId : userid});
+        var findone = await bookMarkSchema.find({ $and: [{userId : userid},{status : true}] });
         if(findone.length == 0){
             res.status(200).json({IsSuccess : true, Data : [], Message : "No Data Found"});
         }
