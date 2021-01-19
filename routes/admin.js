@@ -34,6 +34,7 @@ var business_storiesCategorySchema = require('../model/business_stories_category
 var bussModelSchema = require('../model/bus_storyModel');
 const { off, resource, all } = require('../app.js');
 const { time } = require('console');
+const { json } = require('body-parser');
 
 var newCategoryImage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -2049,7 +2050,8 @@ router.post("/getsingleuserbookmark", async function(req,res,next){
                 news_id += findone[i].newsId+ ",";
             }
             var da = news_id.slice(0,-1);
-            var news_wp =  await request.post('http://www.thenationaldawn.in/wp-json/custom/bookmark',{form:{bookmark_news_id : "5621,5607"}}, function (error, response, body){
+            console.log("news id" + da);
+            var news_wp =  await request.post('http://www.thenationaldawn.in/wp-json/custom/bookmark',{form:{bookmark_news_id : da}}, function (error, response, body){
                 // console.log(response.body);
                 // news_wp = response.body;
             });
@@ -2078,6 +2080,16 @@ router.post("/newsbookmarkid", async function(req,res,next){
             var da = news_id.slice(0,-1);
             res.status(200).json({IsSuccess : true, Data : da, Message : "Data Found"});
         }
+    }
+    catch(err){
+      res.status(500).json({ IsSuccess: false , Message: err.message });
+    }
+});
+
+router.post("/deletemany", async function(req,res,next){
+    try{
+        var data = await bookMarkSchema.deleteMany();
+        res.status(200).json({ IsSuccess : true, Data : 1, Message : " All Data Deleted"});
     }
     catch(err){
       res.status(500).json({ IsSuccess: false , Message: err.message });
