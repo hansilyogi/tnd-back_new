@@ -845,7 +845,7 @@ router.post("/getAllBanner" , async function(req,res,next){
 
 router.post("/offer" , uploadOfferbanner.single("bannerImage") , async function(req,res,next){
     const { title , bannerImage ,userId, businessCategory , dateTime , details ,redeemBy , 
-        offerExpire ,faceBook , instagram , linkedIn , twitter , whatsApp , youTube  } = req.body;
+        offerExpire ,faceBook, mail , instagram , linkedIn , twitter , whatsApp , youTube  } = req.body;
     
     var expire = moment(offerExpire);
     expire = expire.utc().format('DD/MM/YYYY');
@@ -904,6 +904,7 @@ router.post("/offer" , uploadOfferbanner.single("bannerImage") , async function(
             faceBook: faceBook,
             instagram: instagram,
             linkedIn: linkedIn,
+            mail : mail,
             twitter: twitter,
             whatsApp: whatsApp,
             youTube: youTube,
@@ -947,7 +948,7 @@ router.post("/getOfferOfBusiness" , async function(req,res,next){
 });
 
 router.post("/updateOffer" , async function(req,res,next){
-    const {  id, title , bannerImage , dateTime ,offerExpire, businessCategory ,faceBook,instagram,whatsApp,linkedIn,youTube, details ,redeemBy } = req.body;
+    const {  id, title , bannerImage , dateTime ,offerExpire, businessCategory,mail ,faceBook,instagram,whatsApp,linkedIn,youTube, details ,redeemBy } = req.body;
     console.log(req.body);
     const file = req.file;
     try {
@@ -986,6 +987,7 @@ router.post("/updateOffer" , async function(req,res,next){
                 faceBook : faceBook,
                 instagram : instagram,
                 whatsApp : whatsApp,
+                mail : mail,
                 linkedIn : linkedIn,
                 youTube : youTube,
                 bannerImage : file == undefined ? "" : 'https://res.cloudinary.com/dckj2yfap/image/upload/v1601267438/blog/offer/'+uniqueFilename,
@@ -1484,7 +1486,7 @@ router.post("/addToBookMark", async function(req,res,next){
                 status : true,
             });
             record1.save();
-            res.status(200).json({ IsSuccess: true , Data: 1 , Message: "Added To BookMark" });
+            res.status(200).json({ IsSuccess: true , Data: [record1] , Message: "Added To BookMark" });
         }else if(record.length == 1){
             var bid = record[0]._id;
             var state = record[0].status;
@@ -1495,10 +1497,11 @@ router.post("/addToBookMark", async function(req,res,next){
                 status = true;
             }
             var new_record = await bookMarkSchema.findByIdAndUpdate(bid, {status : status});
-            res.status(200).json({ IsSuccess: true , Data: 2 , Message: "Bookmark Changed" });
+            var data_new = await bookMarkSchema.find({_id : bid});
+            res.status(200).json({ IsSuccess: true , Data: [data_new] , Message: "Bookmark Changed" });
         }
         else{
-            res.status(200).json({IsSuccess : true, Data : -1, Message : "Invalid Data"});
+            res.status(200).json({IsSuccess : true, Data : [], Message : "Invalid Data"});
         }
     } catch (error) {
         res.status(500).json({ IsSuccess: false , Message: error.message });
@@ -2057,7 +2060,7 @@ router.post("/getsingleuserbookmark", async function(req,res,next){
             });
             var news_data = JSON.parse(news_wp);
             var final_data = news_data["Data"];
-            res.status(200).json({ IsSuccess : true, Data : final_data, Message : "Data Found" });
+            res.status(200).json({ IsSuccess : true,count : final_data.length, Data : final_data, Message : "Data Found" });
         }
     }
     catch(err){

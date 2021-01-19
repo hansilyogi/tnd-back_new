@@ -3,6 +3,7 @@ var router = express.Router();
 
 var connectionRequestSchema = require('../model/connectionRequest');
 var directoryData = require('../model/test.model');
+var connectionModel = require('../model/connectionModel');
 
 router.post('/directorylisting', async function(req , res , next){
     try {
@@ -73,6 +74,21 @@ router.post('/profile', async function(req , res , next){
             res.status(200).json({ Message: "Data Not Found...!!!", IsSuccess: false });
         }
     } catch (error) {
+        res.status(500).json({ Message: error.message, IsSuccess: false });
+    }
+});
+
+router.post("/directoryconnection", async function(req,res,next){
+    const userid = req.body.userid;
+    try{
+        var userdata = await directoryData.find({_id : userid});
+        var conndata = await connectionModel.find({requestSender : userid})
+                                            .select('requestReceiver requestStatus');
+        
+        var result = userdata + conndata;
+        res.status(200).json({ IsSuccess : true, Data : conndata, Message : "Data found"});
+    }
+    catch(err){
         res.status(500).json({ Message: error.message, IsSuccess: false });
     }
 });

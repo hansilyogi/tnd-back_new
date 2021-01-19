@@ -66,10 +66,18 @@ var newSchema = mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: "MemberShip", 
     }],
+    member_id : [{
+        type: mongoose.Types.ObjectId,
+        ref: "MemberShip", 
+    }],
     business_category : { 
         type: mongoose.Types.ObjectId,
         ref: "BusinessCategory",
     },
+    business_id : [{
+        type: mongoose.Types.ObjectId,
+        ref: "BusinessCategory",
+    }],
     experience : { 
         type:String,
         default: ""

@@ -113,6 +113,8 @@ router.post("/updatePersonal" , uploadUserProfile.single("img") , async function
       img: file == undefined ? "" : 'https://res.cloudinary.com/dckj2yfap/image/upload/v1601267438/blog/users/'+uniqueFilename,
       memberOf: memberOf,
       business_category: business_category,
+      member_id : memberOf,
+      business_id : business_category,
       experience: experience,
       about_business: about_business,
       keyword: keyword,

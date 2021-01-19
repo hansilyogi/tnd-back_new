@@ -59,6 +59,10 @@ const offerSchema = mongoose.Schema({
         type: String,
         default: "https://www.youtube.com/"
     },
+    mail : {
+        type : String,
+        default : "xyz@gmail.com",
+    }
 });
 
 module.exports = mongoose.model("offer", offerSchema);
