@@ -74,10 +74,10 @@ var newSchema = mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: "BusinessCategory",
     },
-    business_id : [{
+    business_id : {
         type: mongoose.Types.ObjectId,
         ref: "BusinessCategory",
-    }],
+    },
     experience : { 
         type:String,
         default: ""

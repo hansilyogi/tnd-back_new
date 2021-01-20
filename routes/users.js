@@ -446,6 +446,15 @@ router.post("/requestcomplete", async function(req,res,next){
   }
 });
 
+function getRandomString(length) {
+  var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var result = '';
+  for ( var i = 0; i < length; i++ ) {
+      result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+  }
+  return result;
+}
+
 router.post("/getreferalcode", async function(req,res,next){
   const userid = req.body.userid;
   try{
@@ -454,11 +463,29 @@ router.post("/getreferalcode", async function(req,res,next){
       res.status(200).json({IsSuccess : true, Data : 0, Message : "User already has referal code"});
     }
     else{
+      var new_refer = getRandomString(6);
       var newdata = await new referalcodeSchema({
         Userid : userid,
+        referalcode : new_refer,
       });
       newdata.save();
       res.status(200).json({IsSuccess : true, Data : 1, Message : "User got Referal Code"});
+    }
+  }
+  catch(err){
+    res.status(500).json({ IsSuccess: false , Message: err.message });
+  }
+});
+
+router.post("/getsingleuser_refer" ,async function(req,res,next){
+  const userid = req.body.userid;
+  try{
+    var referdata = await referalcodeSchema.find({Userid : userid});
+    if(referdata.length == 0){
+      res.status(200).json({IsSuccess : true, Data : 0, Message : "No Data Found"});
+    }
+    else{
+      res.status(200).json({IsSuccess : true, Data : referdata, Message : "Data Found"});
     }
   }
   catch(err){

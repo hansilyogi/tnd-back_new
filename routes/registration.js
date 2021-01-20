@@ -10,6 +10,9 @@ const isEmpty = require('lodash.isempty');
 var moment = require('moment');
 // const testModel = require('../model/test.model');
 var axios = require("axios");
+var referalcodeSchema = require('../model/referalcodeModel');
+var request = require('request-promise');
+
 
 var userProfile = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -36,17 +39,35 @@ router.post('/', async function(req, res, next) {
     try{
         var isData = await model.find({ mobile : mobile});
         if(isData.length == 0){
+         
           var record = new model({
           name : req.body.name,
           mobile : req.body.mobile,
           email : req.body.email,
           company_name : req.body.company_name,
           referred_by : req.body.referred_by,
+          refralcode : req.body.refralcode,
           fcmToken: req.body.fcmToken,
           isVerified: req.body.isVerified,  
           });
-          console.log(record);
+          
           record.save();
+          
+          let userId = record._id;
+          console.log(userId);
+
+          var new_user_refer =  await request.post('http://15.207.46.236/users/getreferalcode',{userid : userId}, function (error, response, body){
+          });
+          
+          var referused = await referalcodeSchema.find({referalcode : req.body.refralcode});
+          
+          if(referused.length != 0){
+            referalcode = await referalcodeSchema.findByIdAndUpdate(referused[0]._id,{ $push : {usedby : userId} });
+            // console.log(referalcode);
+          }else{
+            res.status(200).json({ IsSuccess : true, Data :[], Message : "Data Not Found"});
+          }
+          // console.log(record);
           return res.status(200).send({ IsSuccess: true, Message : "Registration Successfull" , Data: [record]});
         }
         else{
