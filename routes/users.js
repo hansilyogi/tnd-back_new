@@ -457,6 +457,7 @@ function getRandomString(length) {
 
 router.post("/getreferalcode", async function(req,res,next){
   const userid = req.body.userid;
+  // console.log("userid : " + userid);
   try{
     var data = await referalcodeSchema.find({Userid : userid});
     if(data.length != 0){

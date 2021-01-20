@@ -12,6 +12,7 @@ const referalcodeSchema = mongoose.Schema({
     Userid: {
         type: mongoose.Types.ObjectId,
         ref: "UsersList",
+        required : true,
     },
     usedby : [
         {

@@ -56,7 +56,8 @@ router.post('/', async function(req, res, next) {
           let userId = record._id;
           console.log(userId);
 
-          var new_user_refer =  await request.post('http://15.207.46.236/users/getreferalcode',{userid : userId}, function (error, response, body){
+          var new_user_refer =  await request.post('http://15.207.46.236/users/getreferalcode',{json :{userid : userId}}, function (error, response, body){
+            // console.log(response);
           });
           
           var referused = await referalcodeSchema.find({referalcode : req.body.refralcode});
@@ -64,8 +65,6 @@ router.post('/', async function(req, res, next) {
           if(referused.length != 0){
             referalcode = await referalcodeSchema.findByIdAndUpdate(referused[0]._id,{ $push : {usedby : userId} });
             // console.log(referalcode);
-          }else{
-            res.status(200).json({ IsSuccess : true, Data :[], Message : "Data Not Found"});
           }
           // console.log(record);
           return res.status(200).send({ IsSuccess: true, Message : "Registration Successfull" , Data: [record]});
