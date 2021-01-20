@@ -91,8 +91,8 @@ var newSchema = mongoose.Schema({
         default: ""
     },
     status : { 
-        type: Boolean,
-        // default: true
+        type: String,
+        default: 'send',
     },
     keyword : {
         type : String,

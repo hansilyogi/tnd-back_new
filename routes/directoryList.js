@@ -6,6 +6,7 @@ var directoryData = require('../model/test.model');
 var connectionModel = require('../model/connectionModel');
 
 router.post('/directorylisting', async function(req , res , next){
+    const userid = req.body.userid;
     try {
         let directoryList = await directoryData.find({ismember : true})
                                                .populate({
@@ -14,6 +15,19 @@ router.post('/directorylisting', async function(req , res , next){
                                                .populate({
                                                    path: "memberOf"
                                                });
+        
+        let conndata = await connectionModel.find({requestSender : userid});
+        
+        for(let y = 0; y < conndata.length; y++){
+            // console.log("Recevieer Id : "+ conndata[y].requestReceiver);
+            var finddata = await directoryData.find({_id : conndata[y].requestReceiver});
+            if(finddata != null){
+                let statusdata = await directoryData
+                        .findByIdAndUpdate(finddata[0]._id, {status : conndata[y].requestStatus});
+            }
+            // console.log("update id : "+finddata[0]._id);
+        }
+        
         if(directoryList != null){
             res.status(200).json({ Message: "Data Found...!!!", Count : directoryList.length , Data: directoryList, IsSuccess: true });
         }else{
@@ -21,6 +35,18 @@ router.post('/directorylisting', async function(req , res , next){
         }
     } catch (error) {
         res.status(500).json({ Message: error.message, IsSuccess: false });
+    }
+});
+
+router.post("/updateStatus",async function(req,res,next){
+    try {
+        let user = await directoryData.find();
+        for(let i=0;i<user.length;i++){
+            let updateIs = await directoryData.findByIdAndUpdate(user[i]._id,{ status: "send" });
+        }
+        res.send("Chokhkhi.................>>>!!!!!!!!!!!!!!!!!!!!!");
+    } catch (error) {
+        res.status(500).json({ IsSuccess: false , Message: error.message });
     }
 });
 
