@@ -614,7 +614,7 @@ router.post("/requestcomplete", async function(req,res,next){
         topic : topic,
         generatedRefral : generatedRefral,
         date : date,
-        requestStatus : "completed"
+        requestStatus : "Send"
       };
 
       var updateid = await connectionSchema.findByIdAndUpdate(dataexist[0]._id, isstatus);

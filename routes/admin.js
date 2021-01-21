@@ -2071,7 +2071,7 @@ router.post("/getsingleuserbookmark", async function(req,res,next){
 router.post("/newsbookmarkid", async function(req,res,next){
     const userid = req.body.id;
     try{
-        var findone = await bookMarkSchema.find({userId : userid});
+        var findone = await bookMarkSchema.find({ $and: [{userId : userid},{status : true}] });
         if(findone.length == 0){
             res.status(200).json({IsSuccess : true, Data : 0, Message : "No Data Found"});
         }
@@ -2081,6 +2081,7 @@ router.post("/newsbookmarkid", async function(req,res,next){
                 news_id += findone[i].newsId+ ",";
             }
             var da = news_id.slice(0,-1);
+            console.log(da);
             res.status(200).json({IsSuccess : true, Data : da, Message : "Data Found"});
         }
     }
