@@ -337,7 +337,7 @@ router.post("/oneTwoOneConnectionReq_v1", async function(req,res,next){
       console.log(existRecord);
       if(existRecord.length == 1){
         console.log(1);
-          if(existRecord[0].requestStatus == 'rejected'){
+          if(existRecord[0].requestStatus == 'rejected' || existRecord[0].requestStatus == 'send'){
             var againreq = await connectionSchema.findByIdAndUpdate(existRecord[0]._id, {requestStatus : 'requested'});
             
             let receiverData = await directoryData.find({ _id: requestReceiver })
@@ -635,7 +635,7 @@ router.post("/requestcomplete", async function(req,res,next){
       // console.log(updateid);
       var news_wp =  await request.post('http://15.207.46.236/directory/directorylisting',{json:{userid : requestSender}}, function (error, response, body){
             });
-            
+
       res.status(200).json({ IsSuccess : true, Data : 1, Message : "Data updated"});
     }
   }
