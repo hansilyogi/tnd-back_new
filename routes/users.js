@@ -310,7 +310,7 @@ router.post("/oneTwoOneConnectionReq_v1", async function(req,res,next){
       requestSender , 
       requestReceiver , 
       requestStatus,
-      notificationData, 
+      notificationData,
       meetingType , 
       meetingLink ,
   } = req.body;
@@ -330,14 +330,14 @@ router.post("/oneTwoOneConnectionReq_v1", async function(req,res,next){
                     .split(",")[1];
     let existRecord = await connectionSchema.find({
         $and: [
-          {requestSender : requestSender}, 
+          {requestSender : requestSender},
           {requestReceiver : requestReceiver},
         ]
       });
       console.log(existRecord);
       if(existRecord.length == 1){
         console.log(1);
-          if(existRecord[0].requestStatus == 'rejected' || existRecord[0].requestStatus == 'accepted' || existRecord[0].requestStatus == 'completed'){
+          if(existRecord[0].requestStatus == 'rejected'){
             var againreq = await connectionSchema.findByIdAndUpdate(existRecord[0]._id, {requestStatus : 'requested'});
             
             let receiverData = await directoryData.find({ _id: requestReceiver })
@@ -398,6 +398,10 @@ router.post("/oneTwoOneConnectionReq_v1", async function(req,res,next){
                   // }
               }
             });
+
+            var news_wp =  await request.post('http://15.207.46.236/directory/directorylisting',{json:{userid : requestSender}}, function (error, response, body){
+            });
+
             res.status(200).json({ IsSuccess: true , Data: existRecord , Message: "Connection Request Sent Again" });
           }
       }else{
@@ -474,13 +478,15 @@ router.post("/oneTwoOneConnectionReq_v1", async function(req,res,next){
                   // }
               }
             });
+
+            var news_wp =  await request.post('http://15.207.46.236/directory/directorylisting',{json:{userid : requestSender}}, function (error, response, body){
+            });
           
           res.status(200).json({ IsSuccess: true , Data: 1 , Message: "Connection Requested" });
         }else{
           res.status(200).json({ IsSuccess: true , Data: 0 , Message: "Connection Not Send" });
         }
       }
-      
   } catch (error) {
       res.status(500).json({ IsSuccess: false , Message: error.message });
   }
@@ -491,7 +497,9 @@ router.post("/updateConnectionReq", async function(req,res,next){
         requestSender , 
         requestReceiver , 
         requestStatus,
-    } = req.body; 
+    } = req.body;
+    console.log("Req Body : "+req.body);
+    console.log("------------------------------------------------");
     try {
         let existRecord = await connectionSchema.find({
           $and: [
@@ -512,6 +520,8 @@ router.post("/updateConnectionReq", async function(req,res,next){
           let updateIs = {
             requestStatus: requestStatus
           }
+          console.log("update : " + updateIs);
+          console.log("------------------------------------------------");
           let updateConnection = await connectionSchema.findByIdAndUpdate(existRecord[0]._id,updateIs);
           let receiverData = await directoryData.find({ _id: requestReceiver })
                                                   .select("fcmToken name mobile email");
@@ -575,6 +585,10 @@ router.post("/updateConnectionReq", async function(req,res,next){
                   // }
               }
             });
+
+            var news_wp =  await request.post('http://15.207.46.236/directory/directorylisting',{json:{userid : requestSender}}, function (error, response, body){
+            });
+
           res.status(200).json({ IsSuccess: true , Data: 1 , Message: "Connection Updated" });
         }else{
           res.status(200).json({ IsSuccess: true , Data: 0 , Message: "No Connection Data Exist" });
@@ -614,11 +628,14 @@ router.post("/requestcomplete", async function(req,res,next){
         topic : topic,
         generatedRefral : generatedRefral,
         date : date,
-        requestStatus : "Send"
+        requestStatus : "send"
       };
 
       var updateid = await connectionSchema.findByIdAndUpdate(dataexist[0]._id, isstatus);
       // console.log(updateid);
+      var news_wp =  await request.post('http://15.207.46.236/directory/directorylisting',{json:{userid : requestSender}}, function (error, response, body){
+            });
+            
       res.status(200).json({ IsSuccess : true, Data : 1, Message : "Data updated"});
     }
   }
