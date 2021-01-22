@@ -928,9 +928,9 @@ router.post("/offer" , uploadOfferbanner.single("bannerImage") , async function(
 });
 
 router.post("/getOfferOfBusiness" , async function(req,res,next){
-    const { businessCategory_id } = req.body.bid;
+    const { businessCategory_id } = req.body;
     try {
-        var record  = await offerSchema.find({ businessCategory: { _id: businessCategory_id } })
+        var record  = await offerSchema.find({ businessCategory : businessCategory_id })
                                        .populate({
                                            path: "businessCategory",
                                        });
