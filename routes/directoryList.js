@@ -8,7 +8,7 @@ var connectionModel = require('../model/connectionModel');
 router.post('/directorylisting', async function(req , res , next){
     const userid = req.body.userid;
     try {
-        let directoryList = await directoryData.find({ismember : true})
+        let directoryList = await directoryData.find({ $and : [ {ismember : true,}, {_id : { $ne : userid }} ] })
                                                .populate({
                                                    path: "business_category",
                                                })
