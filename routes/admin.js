@@ -155,6 +155,25 @@ router.post('/adminlogin',async function(req,res,next){
     }
 });
 
+router.post('/findbykeyword', async function(req,res,next){
+    const keyword = req.body.keyword;
+    try{
+        
+        // let re = new RegExp("^" + keyword);
+        var finddata = await businessCategorySchema.find({ "categoryName": new RegExp( keyword, 'i') }
+        , function (err,result) { });
+        if(finddata.length != 0){
+            res.status(200).json({ IsSuccess : true, count : finddata.length, Data : finddata, Message : "Data Found"});
+        }
+        else{
+            res.status(200).json({ IsSuccess : true, Data :[], Message : "Not Data Found"});
+        }
+    }
+    catch(err){
+        res.status(500).json({ IsSuccess : false , Message : err.message });
+    }
+});
+
 router.post('/multiphoto', uploadNewsImg.array('newsImage'), async function(req,res,next){
     var fileinfo = req.files;
     var d =[];
