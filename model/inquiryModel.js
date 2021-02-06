@@ -17,6 +17,12 @@ const inquirySchema = mongoose.Schema({
     status : {
         type : Boolean,
         default : false,
+    },
+    byUser : {
+        type: mongoose.Types.ObjectId, ref: "UsersList",
+    },
+    toUser : {
+        type: mongoose.Types.ObjectId, ref: "UsersList",
     }
 });
 

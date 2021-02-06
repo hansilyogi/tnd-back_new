@@ -30,11 +30,13 @@ var bookMarkSchema = require("../model/userBookMarkNews");
 var memberModelSchema = require("../model/memberModel");
 var eventregSchema = require("../model/eventregisterModel");
 var inquirySchema = require("../model/inquiryModel");
+var citySchema = require("../model/cityModel");
 var business_storiesCategorySchema = require('../model/business_stories_categoryModel');
 var bussModelSchema = require('../model/bus_storyModel');
 const { off, resource, all } = require('../app.js');
 const { time } = require('console');
 const { json } = require('body-parser');
+const { errorMonitor } = require('events');
 
 var newCategoryImage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -153,6 +155,21 @@ router.post('/adminlogin',async function(req,res,next){
     } catch (error) {
         res.status(500).json({ IsSuccess : false , Message : "Something Wrong...!!!" });
     }
+});
+
+router.post("/getallcity", async function(req,res,next){
+   try{
+        let allcity = await citySchema.find();
+        if(allcity.length > 0){
+            res.status(200).json({ IsSuccess : true, Data : allcity, Message : "Cities Found"});
+        }
+        else{
+            res.status(200).json({ IsSuccess : true, Data : [], Message : "No Cities Found"});
+        }
+   }
+   catch(error){
+        res.status(500).json({ IsSuccess : false , Message : error.message });
+   }
 });
 
 router.post('/findbykeyword', async function(req,res,next){
@@ -786,9 +803,12 @@ router.post("/businessCategory" , async function(req , res ,next){
 router.post("/usersInBusinessCategory" , async function(req,res,next){
     const { businessCategory_id } = req.body;
     try {
-        var record = await directoryData.find({ business_category: mongoose.Types.ObjectId(businessCategory_id) });
-        if(record){
-            res.status(200).json({ IsSuccess: true , Data: record , Message: "Business Category Users Found" });
+        var record = await directoryData.find({ business_category: businessCategory_id })
+                                        .populate({
+                                            path: "businessCategory",
+                                        });
+        if(record.length > 0){
+            res.status(200).json({ IsSuccess: true ,Count : record.length, Data: record , Message: "Business Category Users Found" });
         }else{
             res.status(200).json({ IsSuccess: true , Data: 0 , Message: "Empty UserList" });
         }
@@ -1943,17 +1963,69 @@ router.post("/verifymember", async function(req,res,next){
 });
 
 router.post("/inquiry", async function(req,res,next){
-    const {name, email, mobile, description} = req.body;
+    const {name, email, mobile, description,byUser, toUser} = req.body;
     try{
+        var userfcm = await directoryData.find({_id : toUser});
+        // console.log(userfcm);
+        var fcmtoken = userfcm[0].fcmToken;
+
+        let objDate = new Date();
+        let stringDate = objDate.toString();
+        let dateList = stringDate.split(" ");
+
+        console.log("................Notification..............................");
+
+        let newOrderNotification = `Someone has inquired to you.
+        Date-Time : ${dateList}`;
+
+        var dataSendToAdmin = {
+        "to":fcmtoken,
+        "priority":"high",
+        "content_available":true,
+        "data": {
+            "sound": "surprise.mp3",
+            "click_action": "FLUTTER_NOTIFICATION_CLICK"
+        },
+        "notification":{
+                    "body": newOrderNotification,
+                    "title":"New Notification Received",
+                    "badge":1
+                }
+        };
+
+        var options2 = {
+            'method': 'POST',
+            'url': 'https://fcm.googleapis.com/fcm/send',
+            'headers': {
+                'authorization': 'key=AAAA6iLVZks:APA91bGUpLM6fb7if-uzgCnl4i-xR6734jhkZ3C-u-7PKjFYu0SGsy_cRIDLWGqULXDTt4kR6-etX40Fv2yfrXDDa87V-fY7QsFDIn5lNT-rf3LDpIGmSkmA-Aeffz1OYix-NXMVxabz',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataSendToAdmin)
+        };
+
+        request(options2, function (error, response , body) {
+        console.log("--------------------Sender--------------------");
+        let myJsonBody = JSON.stringify(body);
+        console.log(myJsonBody[51]);
+        if (error) {
+            console.log(error.message);
+        } else {
+            console.log("Sending Notification Testing....!!!");
+            console.log("helloo........" + response.body);
+        }
+        });
+
         var data = await new inquirySchema({
             name : name,
             email : email,
             mobile : mobile,
             description : description,
-        })
+            byUser : byUser,
+            toUser : toUser,
+        });
         if(data){
             data.save();
-            res.status(200).json({IsSuccess : true, Data : [data], Message : "Inquiry send"});
+            res.status(200).json({IsSuccess : true, Data : data, Message : "Inquiry send"});
         }
         else{
             res.status(200).json({IsSuccess : true, Data : [], Message : "Inquiry Not send"});
@@ -1976,6 +2048,23 @@ router.post("/getinquiry", async function(req,res,next){
     }
     catch(err){
     res.status(500).json({ Message: err.message, Data: 0, IsSuccess: false });
+    }
+});
+
+router.post("/accpetuserinquiry", async function(req,res,next) {
+    const {byUser, toUser} = req.body;
+    try{
+        var findinquiry = await inquirySchema.find({ $and: [{byUser : byUser},{toUser : toUser}] });
+        if(findinquiry.length == 0){
+            res.status(200).json({ IsSuccess : true, Data : 0, Message : "No Data Found"});
+        }
+        else{
+            var updatereq = await inquirySchema.findByIdAndUpdate(findinquiry[0]._id, {status : true});
+            res.status(200).json({ IsSuccess : true, Data : 1, Message : "Data Updated"});
+        }
+    }
+    catch(error){
+        res.status(500).json({ IsSuccess : false, Message : errorMonitor.message });
     }
 });
 

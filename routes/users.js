@@ -645,7 +645,7 @@ router.post("/requestcomplete", async function(req,res,next){
 });
 
 function getRandomString(length) {
-  var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   var result = '';
   for ( var i = 0; i < length; i++ ) {
       result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
