@@ -11,6 +11,9 @@ var newsCategorySchema = mongoose.Schema({
     },
     categoryImage: {
         type:String
+    },
+    priority :{
+        type : Number
     }
 });
 

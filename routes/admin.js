@@ -241,9 +241,23 @@ router.post("/addNewsCategory" , uploadCategoryImg.single("categoryImage") , asy
     }
 });
 
+router.post('/updaterecord', async function(req,res,next){
+    try {
+        let newscat = await newsCategorySchema.find();
+        for(i=0;i<newscat.length;i++){
+            let updateis = await newsCategorySchema.findByIdAndUpdate(newscat[i]._id, {priority : 1});
+        }
+        res.status(200).json({IsSuccess : true, Message : "Done"});
+    }
+    catch(err){
+        res.status(500).json({ IsSuccess: false, Message: error.message });
+    }
+});
+
 router.post("/getNewsCategory" , async function(req,res,next){
     try {
-        var record = await newsCategorySchema.find();
+        
+        var record = await newsCategorySchema.find().sort({priority : 1});
         if(record){
             res.status(200).json({ IsSuccess: true , Data: record , Message: "News Category Found" });
         }else{
