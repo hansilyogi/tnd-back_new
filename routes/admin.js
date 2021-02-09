@@ -1981,8 +1981,7 @@ router.post("/inquiry", async function(req,res,next){
         console.log("................Notification..............................");
         // console.log(fromfcm[0].name);
 
-        let newOrderNotification = `${fromfcm[0].name} has inquired to you.
-        Date-Time : ${dateList}`;
+        let newOrderNotification = `${fromfcm[0].name} has inquired to you. `;
 
         var dataSendToAdmin = {
         "to":fcmtoken,
@@ -2058,6 +2057,11 @@ router.post("/getinquiry", async function(req,res,next){
     catch(err){
     res.status(500).json({ Message: err.message, Data: 0, IsSuccess: false });
     }
+});
+
+router.post("/delinq", async function(req,res,next){
+    var delinqq = await inquirySchema.deleteMany();
+    res.status(200),json({ Message : "Done"});
 });
 
 router.post("/accpetuserinquiry", async function(req,res,next) {
