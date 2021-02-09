@@ -801,11 +801,15 @@ router.post("/businessCategory" , async function(req , res ,next){
 });
 
 router.post("/usersInBusinessCategory" , async function(req,res,next){
-    const { businessCategory_id } = req.body;
+    const businessCategory_id = req.body.bid;
+    console.log(req.body);
     try {
         var record = await directoryData.find({ business_category: businessCategory_id })
                                         .populate({
-                                            path: "businessCategory",
+                                            path: "business_category",
+                                        })
+                                        .populate({
+                                            path : "memberOf"
                                         });
         if(record.length > 0){
             res.status(200).json({ IsSuccess: true ,Count : record.length, Data: record , Message: "Business Category Users Found" });
