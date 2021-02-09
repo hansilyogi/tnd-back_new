@@ -1969,6 +1969,7 @@ router.post("/verifymember", async function(req,res,next){
 router.post("/inquiry", async function(req,res,next){
     const {name, email, mobile, description,byUser, toUser} = req.body;
     try{
+        var fromfcm = await directoryData.find({_id : byUser});
         var userfcm = await directoryData.find({_id : toUser});
         // console.log(userfcm);
         var fcmtoken = userfcm[0].fcmToken;
@@ -1978,8 +1979,9 @@ router.post("/inquiry", async function(req,res,next){
         let dateList = stringDate.split(" ");
 
         console.log("................Notification..............................");
+        // console.log(fromfcm[0].name);
 
-        let newOrderNotification = `Someone has inquired to you.
+        let newOrderNotification = `${fromfcm[0].name} has inquired to you.
         Date-Time : ${dateList}`;
 
         var dataSendToAdmin = {
@@ -1988,7 +1990,10 @@ router.post("/inquiry", async function(req,res,next){
         "content_available":true,
         "data": {
             "sound": "surprise.mp3",
-            "click_action": "FLUTTER_NOTIFICATION_CLICK"
+            "click_action": "FLUTTER_NOTIFICATION_CLICK",
+            "senerID" : byUser,
+            "ReceiverId" : toUser,
+            "status" : "inquiry"
         },
         "notification":{
                     "body": newOrderNotification,
@@ -2029,7 +2034,7 @@ router.post("/inquiry", async function(req,res,next){
         });
         if(data){
             data.save();
-            res.status(200).json({IsSuccess : true, Data : data, Message : "Inquiry send"});
+            res.status(200).json({IsSuccess : true, Data : [data], Message : "Inquiry send"});
         }
         else{
             res.status(200).json({IsSuccess : true, Data : [], Message : "Inquiry Not send"});
