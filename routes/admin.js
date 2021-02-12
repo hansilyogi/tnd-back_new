@@ -8,7 +8,61 @@ var request = require('request-promise');
 // var moment = require('moment');
 const moment = require('moment-timezone');
 const mongoose = require("mongoose");
-// var request = require('request');
+// import xlsxFile from 'read-excel-file';
+
+const xlsxFile = require('read-excel-file/node');
+
+router.post("/delitem", async function(req,res,next){
+    try{
+        var h = await directoryData.find({ email: "admin@gmail.com"});
+        console.log(h.length);
+        for(let i=0;i<h.length; i++){
+            // console.log(h[i]._id);
+            var y = await directoryData.findByIdAndDelete(h[i]._id);
+        }
+        res.status(200).json({Message : "Done"});
+    }
+    catch(err){
+        res.status(500).json({ Message : err.message, IsSuccess : false});
+    }
+});
+
+router.post('/addmember', async function(req,res,next) {
+    try {
+        let dataIs = [];
+        xlsxFile('./excel_BNI/BNI_Elite 131.xlsx').then(async (rows) => {
+            console.log(rows.length);
+            
+            // for(let i=0;i<rows.length;i++){
+            //     let x = {
+            //         "name" : rows[0],
+            //         "mobile" : rows[6],
+            //         "email" : "admin@gmail.com",
+            //         "company_name" : rows[1],
+            //     }
+            //     console.log(x);
+            // }
+            rows.forEach(async function(col) {
+                console.log(col);
+                let addMember = await new directoryData({
+                    name : col[0],
+                    mobile : col[6],
+                    email : "admin@gmail.com",
+                    company_name : col[1],
+                });
+                console.log(addMember);
+                await addMember.save();
+            })
+            
+        });   
+        // res.status(200).json({ Data: dataIs }); 
+    } catch (error) {
+        res.status(500).json({ Message : error.message, IsSuccess : false});
+    }
+     
+    // res.send({x});
+});
+
 
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({

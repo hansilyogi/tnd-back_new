@@ -60,7 +60,8 @@ var newSchema = mongoose.Schema({
     },
     img : { 
         type: String,
-        default: "uploads/users/default-profile.png", 
+        // default: "uploads/users/default-profile.png",
+        default : "https://res.cloudinary.com/dckj2yfap/image/upload/v1610557322/blog/users/2021-01-13T17:02:02.133Z.jpg" 
     },
     memberOf : [{ 
         type: mongoose.Types.ObjectId,
