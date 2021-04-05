@@ -1,0 +1,801 @@
+[{
+  "_id": {
+    "$oid": "5faba9c68622fc710f8e0e54"
+  },
+  "dateTime": {
+    "$date": "2020-11-11T09:07:14.430Z"
+  },
+  "categoryName": "Software Company",
+  "categoryImage": "https://res.cloudinary.com/dckj2yfap/image/upload/v1601267438/blog/businessCategory/2020-12-29T10:24:09.371Z",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fc88a489d3b200b1a95f7e8"
+  },
+  "dateTime": {
+    "$date": "2020-12-02T12:12:09.303Z"
+  },
+  "categoryName": "Press",
+  "categoryImage": "https://res.cloudinary.com/dckj2yfap/image/upload/v1601267438/blog/businessCategory/2020-12-03T06:48:40.634Z",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fe1da819d3b200b1a95f85f"
+  },
+  "dateTime": {
+    "$date": "2020-12-02T12:12:09.303Z"
+  },
+  "categoryName": "DOCTOR",
+  "categoryImage": "https://res.cloudinary.com/dckj2yfap/image/upload/v1601267438/blog/businessCategory/2020-12-29T12:04:02.360Z",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fe2e0c79d3b200b1a95f865"
+  },
+  "dateTime": {
+    "$date": "2020-12-02T12:12:09.303Z"
+  },
+  "categoryName": "Influencer",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fe307039d3b200b1a95f870"
+  },
+  "dateTime": {
+    "$date": "2020-12-02T12:12:09.303Z"
+  },
+  "categoryName": " Insurance Guru",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fe442779d3b200b1a95f87a"
+  },
+  "dateTime": {
+    "$date": "2020-12-02T12:12:09.303Z"
+  },
+  "categoryName": "Builder",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff57a1ddb8104630dfa4fa6"
+  },
+  "dateTime": {
+    "$date": "2021-01-06T07:58:24.109Z"
+  },
+  "categoryName": "Motorcycle Dealership",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff57fbfdb8104630dfa4fab"
+  },
+  "dateTime": {
+    "$date": "2021-01-06T07:58:24.109Z"
+  },
+  "categoryName": "Building Materials & Pest Control",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff583bcdb8104630dfa4faf"
+  },
+  "dateTime": {
+    "$date": "2021-01-06T07:58:24.109Z"
+  },
+  "categoryName": " Financial Planner - Investment Management Company - Investing Service",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff5a5e1db8104630dfa4fba"
+  },
+  "dateTime": {
+    "$date": "2021-01-06T07:58:24.109Z"
+  },
+  "categoryName": " laboratory ",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff5a5e5db8104630dfa4fbb"
+  },
+  "dateTime": {
+    "$date": "2021-01-06T07:58:24.109Z"
+  },
+  "categoryName": "undefined",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff6942aeb744a69ead33eae"
+  },
+  "dateTime": {
+    "$date": "2021-01-06T15:04:46.981Z"
+  },
+  "categoryName": "Bakery",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff6a1d6eb744a69ead33eb3"
+  },
+  "dateTime": {
+    "$date": "2021-01-06T15:04:46.981Z"
+  },
+  "categoryName": "Furniture · Shopping & Retail",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff6a435eb744a69ead33eb6"
+  },
+  "dateTime": {
+    "$date": "2021-01-06T15:04:46.981Z"
+  },
+  "categoryName": "Jewellers",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff6a832eb744a69ead33eb9"
+  },
+  "dateTime": {
+    "$date": "2021-01-06T15:04:46.981Z"
+  },
+  "categoryName": "Information Technology Company",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601bdb97cb588a25d6291c18"
+  },
+  "dateTime": {
+    "$date": "2021-02-04T09:41:23.586Z"
+  },
+  "categoryName": "Demo",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266206ec7fb52a14e34e16"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Food/Beverages",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026627eec7fb52a14e34e17"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Equipment ",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026628cec7fb52a14e34e18"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Flowers ",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602662acec7fb52a14e34e1a"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Accounting ",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602662b8ec7fb52a14e34e1b"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Interior ",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602662d0ec7fb52a14e34e1c"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Consulting ",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602662dfec7fb52a14e34e1d"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Furniture",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602662f4ec7fb52a14e34e1e"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Graphic Design",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266306ec7fb52a14e34e1f"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Clothing",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266315ec7fb52a14e34e20"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Trades ",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266360ec7fb52a14e34e22"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Insurance",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026636eec7fb52a14e34e23"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Car/Vehicle",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026639fec7fb52a14e34e24"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Financial",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602663bcec7fb52a14e34e25"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Business",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602663daec7fb52a14e34e26"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Travel",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602663efec7fb52a14e34e27"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Security",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602663fcec7fb52a14e34e28"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Landscaping",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266416ec7fb52a14e34e29"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Art",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266425ec7fb52a14e34e2a"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Computer",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266430ec7fb52a14e34e2b"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Electronics",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266472ec7fb52a14e34e2d"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Cleaning",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026647cec7fb52a14e34e2e"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Jewellery",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602664b3ec7fb52a14e34e2f"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Events",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602664beec7fb52a14e34e30"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Employment",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602664caec7fb52a14e34e31"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Coach",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602664f7ec7fb52a14e34e34"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Architectural",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266500ec7fb52a14e34e35"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "AUTOCON SOLUTIONS",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026652cec7fb52a14e34e36"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Property",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266537ec7fb52a14e34e37"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Information Technology",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026655aec7fb52a14e34e38"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Media",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266567ec7fb52a14e34e39"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Appearance",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266587ec7fb52a14e34e3b"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Educational",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602665acec7fb52a14e34e3d"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Gifts",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602665b9ec7fb52a14e34e3e"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Telecommunications",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602665e2ec7fb52a14e34e40"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Photography",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026663bec7fb52a14e34e41"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Health & Wellness",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266668ec7fb52a14e34e42"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Medical",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026668bec7fb52a14e34e43"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Environmental",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266693ec7fb52a14e34e44"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "MAX MEDIA",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602666baec7fb52a14e34e45"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Entertainment",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602666c5ec7fb52a14e34e46"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Non-Profit Organization",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602666efec7fb52a14e34e47"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Personal Services",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266725ec7fb52a14e34e48"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Wedding",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026674fec7fb52a14e34e49"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Agricultural",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026675dec7fb52a14e34e4a"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Embroidery",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026679dec7fb52a14e34e4b"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Advertising",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602667a6ec7fb52a14e34e4c"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Glass",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602667aeec7fb52a14e34e4d"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Fuels",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602667ddec7fb52a14e34e4e"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Marketing",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602667e5ec7fb52a14e34e4f"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Recreation",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602667eeec7fb52a14e34e50"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Sports",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602667f6ec7fb52a14e34e51"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Printing",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266836ec7fb52a14e34e52"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Pest Control",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266a0dec7fb52a14e34e53"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Other",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266a47ec7fb52a14e34e54"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Legal",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266a77ec7fb52a14e34e55"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Office",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266abeec7fb52a14e34e56"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Engineering",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266b15ec7fb52a14e34e57"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Signs",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266cbbec7fb52a14e34e58"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Apparel",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266cddec7fb52a14e34e59"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Real Estate",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266d6eec7fb52a14e34e5a"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Automotive",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266d9dec7fb52a14e34e5b"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Deliveries",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60266fb9ec7fb52a14e34e5c"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Event Planning",
+  "categoryImage": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60267233ec7fb52a14e34e5d"
+  },
+  "dateTime": {
+    "$date": "2021-02-09T12:50:25.564Z"
+  },
+  "categoryName": "Facilities",
+  "categoryImage": "",
+  "__v": 0
+}]
