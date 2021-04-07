@@ -12,7 +12,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '80');
 
 // PUBLIC_VAPID_KEY= "BLl3glcFkqkivPvDWcQ_xmupKBErrBklTBMq08Q8NKnXGsi_PGiBJGDgnwHoZJ3W3sv6im_gIARx7wdm9NNGJ1U";
 // PRIVATE_VAPID_KEY= "AmZDY3aVfOe1o3DZF8RjP7JS-6vhQxMfthzkCZ8usis";
