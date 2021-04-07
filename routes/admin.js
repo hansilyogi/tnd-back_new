@@ -45,12 +45,15 @@ var citySchema = require("../model/cityModel");
 var business_storiesCategorySchema = require('../model/business_stories_categoryModel');
 var bussModelSchema = require('../model/bus_storyModel');
 var epaperSchema = require('../model/epaper.model');
+var masterCategorySchema = require('../model/mastercatModel');
+var SubCategorySchema = require('../model/subcategorymodel');
 var ConnectionRequest = require("../model/connectionRequest");
 var eventRegisterSchema = require("../model/eventregisterModel");
 // const { off, resource, all } = require('../app.js');
 // const { time } = require('console');
 const { json } = require('body-parser');
 const { errorMonitor } = require('events');
+// const subcategorymodel = require('../model/subcategorymodel');
 
 var newCategoryImage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -259,7 +262,7 @@ router.post("/delitem", async function(req, res, next) {
 router.post('/addmember', async function(req, res, next) {
     try {
         let dataIs = [];
-        xlsxFile('./excel_BNI/List of Automotive.xlsx').then(async(rows) => {
+        xlsxFile('./excel_BNI/category.xlsx').then(async(rows) => {
             console.log(rows);
             console.log(rows.length);
 
@@ -273,25 +276,24 @@ router.post('/addmember', async function(req, res, next) {
             //     console.log(x);
             // }
 
-            rows.forEach(async function(col) {
-                let addMember = await new directoryData({
-                    name: col[0],
-                    mobile: col[3],
-                    memberOf: '5fc763fae47d7d695ca827fc',
-                    member_id: '5fc763fae47d7d695ca827fc',
-                    address: col[4],
-                    email: "xxxx@xxx.xxx",
-                    company_name: col[1],
-                });
-                console.log(addMember);
-                await addMember.save();
-            });
+            // rows.forEach(async function(col) {
+            //     let addMember = await new directoryData({
+            //         name: col[0],
+            //         mobile: col[3],
+            //         memberOf: '5fc763fae47d7d695ca827fc',
+            //         member_id: '5fc763fae47d7d695ca827fc',
+            //         address: col[4],
+            //         email: "xxxx@xxx.xxx",
+            //         company_name: col[1],
+            //     });
+            //     console.log(addMember);
+            //     await addMember.save();
+            // });
         });
         // res.status(200).json({ Data: dataIs }); 
     } catch (error) {
         res.status(500).json({ Message: error.message, IsSuccess: false });
     }
-
     // res.send({x});
 });
 
@@ -2534,12 +2536,110 @@ router.post("/updatecount", async function(req,res,next){
         let count = findUser[0].count + 1;
         let updateIs = await directoryData.findByIdAndUpdate(userid, {count : count });
         if(updateIs){
-            var news_wp =  await request.post('http://15.207.46.236/directory/directorylisting',{json:{userid : userid}}, function (error, response, body){
-            });
+            // var news_wp =  await request.post('http://15.207.46.236/directory/directorylisting',{json:{userid : userid}}, function (error, response, body){
+            // });
             res.status(200).json({ IsSuccess : true, Data : 1, Message : "Count updated"});
         }
         else{
             res.status(200).json({ IsSuccess : true, Data : 0, Message : "Count not updated"});
+        }
+    } catch (error) {
+        res.status(500).json({ IsSuccess: false, Message: error.message });
+    }
+});
+
+router.post("/addMastercategory", async function(req,res,next){
+    const {categoryName} = req.body;
+    try {
+        let findIs = await masterCategorySchema.aggregate([
+            {
+                $match : {CategoryName : categoryName}
+            }
+        ]);
+        if(findIs.length == 1){
+            res.status(200).json({ IsSuccess : true, Data :[], Message : "Name already exist"});
+        }
+        else{
+            let newCategory = await new masterCategorySchema({
+                CategoryName : categoryName
+            });
+            if(newCategory){
+                newCategory.save();
+                res.status(200).json({ IsSuccess : true, Data :[newCategory], Message : "Category added"});
+            }
+            else{
+                res.status(200).json({ IsSuccess : true, Data :[], Message : "Category not added"});
+            }
+        }
+    } catch (error) {
+        res.status(500).json({ IsSuccess: false, Message: error.message });
+    }
+});
+
+router.post("/getallMasterCategory", async function(req,res,next){
+    try {
+        let findIs = await masterCategorySchema.aggregate([
+            {
+                $match : {}
+            }
+        ]);
+        if(findIs){
+            res.status(200).json({ IsSuccess : true, Data :findIs, Message : "Category found"});
+        }
+        else{
+            res.status(200).json({ IsSuccess : true, Data :[], Message : "Category not found"});
+        }
+    } catch (error) {
+        res.status(500).json({ IsSuccess: false, Message: error.message });
+    }
+});
+
+router.post("/addsubcategory", async function(req,res,next){
+    const { CategoryName,MastercategoryId } = req.body;
+    try {
+        let findIs = await SubCategorySchema.aggregate([
+            {
+                $match : {
+                    $and :[
+                        {CategoryName : CategoryName},
+                        {Mastercategory : mongoose.Types.ObjectId(MastercategoryId)}
+                    ]
+                }
+            }
+        ]);
+        if(findIs.length == 1){
+            res.status(200).json({ IsSuccess : true, Data :[], Message : "Name already exist"});
+        }
+        else{
+            let newsubCategory = await new SubCategorySchema({
+                CategoryName : CategoryName,
+                Mastercategory :MastercategoryId,
+            });
+            if(newsubCategory){
+                newsubCategory.save();
+                res.status(200).json({ IsSuccess : true, Data :[newsubCategory], Message : "Sub-Category added"});
+            }
+            else{
+                res.status(200).json({ IsSuccess : true, Data :[], Message : "Sub-Category not added"});
+            }
+        }
+    } catch (error) {
+        res.status(500).json({ IsSuccess: false, Message: error.message });
+    }
+});
+
+router.post("/getallSubcategory", async function(req,res,next){
+    try {
+        let findIs = await SubCategorySchema.aggregate([
+            {
+                $match : {}
+            }
+        ]);
+        if(findIs){
+            res.status(200).json({ IsSuccess : true, Data :findIs, Message : "Sub-Category found"});
+        }
+        else{
+            res.status(200).json({ IsSuccess : true, Data :[], Message : "Sub-Category not found"});
         }
     } catch (error) {
         res.status(500).json({ IsSuccess: false, Message: error.message });
