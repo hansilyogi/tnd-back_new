@@ -136,6 +136,10 @@ var newSchema = mongoose.Schema({
         type: String,
         default: ""
     },
+    count :{
+        type : Number,
+        default : 0,
+    }
 });
 
 module.exports = mongoose.model("UsersList",newSchema);

@@ -2519,6 +2519,31 @@ router.post("/getEpaper", async function(req,res,next){
     } catch (error) {
         res.status(500).json({ IsSuccess: false, Message: error.message });
     }
-})
+});
+
+router.post("/updatecount", async function(req,res,next){
+    const {userid} = req.body;
+    try {
+        let findUser = await directoryData.aggregate([
+            {
+                $match : {
+                    _id : mongoose.Types.ObjectId(userid)
+                }
+            }
+        ]);
+        let count = findUser[0].count + 1;
+        let updateIs = await directoryData.findByIdAndUpdate(userid, {count : count });
+        if(updateIs){
+            var news_wp =  await request.post('http://15.207.46.236/directory/directorylisting',{json:{userid : userid}}, function (error, response, body){
+            });
+            res.status(200).json({ IsSuccess : true, Data : 1, Message : "Count updated"});
+        }
+        else{
+            res.status(200).json({ IsSuccess : true, Data : 0, Message : "Count not updated"});
+        }
+    } catch (error) {
+        res.status(500).json({ IsSuccess: false, Message: error.message });
+    }
+});
 
 module.exports = router;

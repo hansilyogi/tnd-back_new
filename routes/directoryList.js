@@ -107,7 +107,7 @@ router.post("/updateStatus",async function(req,res,next){
     try {
         let user = await directoryData.find();
         for(let i=0;i<user.length;i++){
-            let updateIs = await directoryData.findByIdAndUpdate(user[i]._id,{ companylogo: "https://res.cloudinary.com/dckj2yfap/image/upload/v1610557322/blog/users/2021-01-13T17:02:02.133Z.jpg" });
+            let updateIs = await directoryData.findByIdAndUpdate(user[i]._id,{ count: 0 });
         }
         res.send("Chokhkhi.................>>>!!!!!!!!!!!!!!!!!!!!!");
     } catch (error) {
