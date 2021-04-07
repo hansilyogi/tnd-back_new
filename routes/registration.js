@@ -63,8 +63,7 @@ router.post('/', async function(req, res, next) {
           }]);
 
           for(i=0; i<verifiesuser.length; i++){
-            let newOrderNotification = `New User Registerd
-            Sender name : Admin`;
+            let newOrderNotification = `A new member ${req.body.name} just registered in our network. `;
 
             var dataSendToAdmin = {
               "to":verifiesuser[i].fcmToken,
