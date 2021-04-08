@@ -139,7 +139,10 @@ var newSchema = mongoose.Schema({
     count :{
         type : Number,
         default : 0,
-    }
+    },
+    favoraitenewsnotification :[{
+        type : String
+    }]
 });
 
 module.exports = mongoose.model("UsersList",newSchema);

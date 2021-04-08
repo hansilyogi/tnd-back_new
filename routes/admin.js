@@ -263,7 +263,7 @@ router.post('/addmember', async function(req, res, next) {
     try {
         let dataIs = [];
         xlsxFile('./excel_BNI/category.xlsx').then(async(rows) => {
-            console.log(rows);
+            // console.log(rows);
             console.log(rows.length);
 
             // for(let i=0;i<rows.length;i++){
@@ -276,21 +276,17 @@ router.post('/addmember', async function(req, res, next) {
             //     console.log(x);
             // }
 
-            // rows.forEach(async function(col) {
-            //     let addMember = await new directoryData({
-            //         name: col[0],
-            //         mobile: col[3],
-            //         memberOf: '5fc763fae47d7d695ca827fc',
-            //         member_id: '5fc763fae47d7d695ca827fc',
-            //         address: col[4],
-            //         email: "xxxx@xxx.xxx",
-            //         company_name: col[1],
-            //     });
-            //     console.log(addMember);
-            //     await addMember.save();
-            // });
+            rows.forEach(async function(col) {
+                // console.log(col[0]);
+                let addMember = await new SubCategorySchema({
+                    CategoryName : col[0],
+                    Mastercategory : '606d900c31e1410f9c8e9ea2'
+                });
+                console.log(addMember);
+                await addMember.save();
+            });
         });
-        // res.status(200).json({ Data: dataIs }); 
+        res.status(200).json({ Data: "done" }); 
     } catch (error) {
         res.status(500).json({ Message: error.message, IsSuccess: false });
     }
@@ -2636,7 +2632,7 @@ router.post("/getallSubcategory", async function(req,res,next){
             }
         ]);
         if(findIs){
-            res.status(200).json({ IsSuccess : true, Data :findIs, Message : "Sub-Category found"});
+            res.status(200).json({ IsSuccess : true, count :findIs.length,  Data :findIs, Message : "Sub-Category found"});
         }
         else{
             res.status(200).json({ IsSuccess : true, Data :[], Message : "Sub-Category not found"});
